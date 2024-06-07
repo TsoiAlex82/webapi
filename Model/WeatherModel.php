@@ -30,18 +30,19 @@ class WeatherModel extends Database
         $apiKey = "cfc864fd457347b7b1692417240406"; //move to environment variables
 
         $curl = curl_init($service_url);
+        $curl_response = "";
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'key: ' . $apiKey,
             ));
+
         $curl_response = curl_exec($curl);
-        if ($curl_response === false) {
-            $info = curl_getinfo($curl);
+        if ( curl_errno($curl) ) {
+            $error_msg = curl_error($curl);
             curl_close($curl);
-            die('error occured during curl exec. Additioanl info: ' . var_export($info));
+            die($error_msg.'Error during curl exec.');
         }
-        curl_close($curl); 
-        return $curl_response;
-               
+        curl_close($curl);
+        return $curl_response;               
     }
 }

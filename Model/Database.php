@@ -30,8 +30,7 @@ class Database
         try {
             $stmt = $this->executeStatement( $query , $params );
             $result = true;				
-            $stmt->close();
-            
+            $stmt->close();            
         } catch(Exception $e) {
             $result = false;
             throw New Exception( $e->getMessage() );
